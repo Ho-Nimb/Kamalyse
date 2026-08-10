@@ -78,14 +78,6 @@ embarqué dans le fichier pour que l'outil soit utilisable sans réseau.
 
 Un seul fichier HTML. Pas de dépendance, pas d'étape de compilation, pas de serveur.
 
-La version publiée est chiffrée en **AES-256-GCM**, clé dérivée par **PBKDF2** en 310 000
-itérations. Sans le mot de passe, le fichier n'est que du bruit, y compris en lisant le code
-source — contrairement à un simple champ de connexion en JavaScript, qui se contourne en trois
-clics.
-
-## Crédits
-
-Mécaniques de forgemagie et d'Almanax inspirées des outils de
-[Tenmalexis](https://www.youtube.com/@Tenmalexis).
+---
 
 Projet non officiel, sans lien avec Ankama. DOFUS est une marque d'Ankama.
