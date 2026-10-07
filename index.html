@@ -89,6 +89,8 @@
     color:var(--text-dim);
   }
   button:hover{ background:var(--bg-card-hover); color:var(--text); }
+  button:disabled{ opacity:.38; cursor:default; }
+  button:disabled:hover{ background:var(--bg-card); color:var(--text-dim); }
 
   .wrap{
     max-width:1180px;
@@ -198,6 +200,12 @@
   .stat-card.price-input .value{ display:flex; align-items:center; gap:8px; }
   .stat-card.price-input input{ font-size:15px; padding:7px 7px; min-width:0; }
   .stat-card .sub-note{ margin-top:5px; font-size:10.5px; color:var(--text-faint); line-height:1.45; }
+  .stat-card .sub-note.appui{ font-family:var(--font-mono); font-size:17.5px; font-weight:600;
+    font-variant-numeric:tabular-nums; color:var(--text-dim); line-height:1.25; margin-top:3px;
+    overflow-wrap:anywhere; }
+  .stat-card .sub-note.appui small{ font-family:var(--font-body); font-size:10.5px; font-weight:500;
+    color:var(--text-faint); margin-right:5px; }
+  .stat-card .sub-note.appui.profit-neg{ color:var(--profit-neg); }
 
   /* ---------- bandeau d'avertissement ---------- */
   .warn-band{
@@ -480,7 +488,6 @@
   }
   tr.hors-plan td.name .copy-name,
   tr.hors-plan td.num{ opacity:.55; }
-  .marque-hors-plan{ margin-left:7px; }
 
   .taux-input.corrige{ color:var(--pepite); border-color:var(--border); font-weight:600; }
 </style>
@@ -533,40 +540,38 @@
   <section class="group vitrine">
     <h1>Calculateur de pépites et d'XP familier — Dofus</h1>
     <p>
-      Kamalyse répond à une seule question, déclinée par activité : <b>est-ce que ça vaut le coup,
-      et combien ça rapporte vraiment ?</b> Le jeu regorge de conversions à taux fixe — tant de
-      pépites pour tel objet, trois runes base pour une Pa, une offrande contre des kamas. Ces taux
-      sont stables. Ce qui bouge, c'est le prix en hôtel de vente, et c'est là que se loge la marge.
-      L'outil met les deux bouts ensemble et sort le bénéfice net, taxe de vente déduite.
+      Une seule question, déclinée par activité : <b>est-ce que ça vaut le coup, et combien ça
+      rapporte vraiment ?</b> Dofus regorge de conversions à taux fixe — tant de pépites pour tel
+      objet, trois runes base pour une Pa, une offrande contre des kamas. Ces taux sont stables ;
+      ce qui bouge, c'est le prix en hôtel de vente. Kamalyse met les deux bouts ensemble et sort
+      le bénéfice net, taxe de vente déduite.
     </p>
 
     <h2>Recyclage — combien te coûte une pépite</h2>
     <p>
-      Tu renseignes le prix d'achat d'une ressource en hôtel de vente, et la colonne
-      <b>kamas par pépite</b> chiffre la route du brisage au recycleur. Les ressources sont classées
-      de la moins chère à la plus chère, et la couleur dit tout de suite si la route passe sous ton
-      prix de référence. Les rendements de brisage proviennent d'un relevé tenu à la main, objet par
-      objet, corrigé à chaque ajustement du jeu.
+      Tu saisis le prix d'une ressource en hôtel de vente, la colonne <b>kamas par pépite</b> chiffre
+      la route du brisage au recycleur. Les ressources sont classées de la moins chère à la plus
+      chère, et la couleur dit si la route passe sous ton prix de référence. Les rendements viennent
+      d'un relevé tenu à la main, objet par objet.
     </p>
 
     <h2>Familier — jusqu'où le monter, et avec quoi</h2>
     <p>
-      L'outil combine viandes et bidoches par coût croissant, puise d'abord dans ce que tu as déjà
-      en stock, puis chiffre les trois paliers de revente — niveau 80, 90 et 100 — et retient le plus
-      rentable. Monter à 100 n'est pas toujours le bon choix : les derniers niveaux coûtent plusieurs
-      fois le palier 80 en expérience de nourrissage, alors que le prix de revente, lui, ne suit pas
-      toujours.
+      L'outil combine viandes et bidoches par coût croissant, puise d'abord dans ton stock, puis
+      compare les paliers de revente 80, 90 et 100 pour retenir le plus rentable. Monter à 100 n'est
+      pas toujours le bon choix : les derniers niveaux coûtent plusieurs fois le palier 80 en
+      expérience de nourrissage, quand le prix de revente, lui, ne suit pas toujours.
     </p>
 
     <h2>Ce qui est ouvert, ce qui ne l'est pas</h2>
     <p>
-      Les onglets <span class="libre">Recyclage</span> et <span class="libre">Familier</span> sont
-      en <b>accès libre et pleinement fonctionnels</b> — le moteur de calcul est entier, à toi d'y
+      <span class="libre">Recyclage</span> et <span class="libre">Familier</span> sont en
+      <b>accès libre et pleinement fonctionnels</b> : le moteur de calcul est entier, à toi d'y
       saisir tes rendements et tes prix.
     </p>
-    <p>Sont réservés à l'accès complet :</p>
+    <p>Réservé à l'accès complet :</p>
     <ul>
-      <li>le relevé complet — plus de 8 000 rendements de brisage et 2 000 valeurs d'expérience de nourrissage, déjà saisis ;</li>
+      <li>le relevé complet — plus de 8 000 rendements de brisage et 2 000 valeurs d'XP de nourrissage, déjà saisis ;</li>
       <li>les prix d'hôtel de vente relevés et nettoyés ;</li>
       <li>les onglets d'arbitrage : Prix, Reflet Onirique, Pépite, Kolizéton, Zones, Runes, Élevage, Packs métiers et Almanax.</li>
     </ul>
@@ -601,7 +606,7 @@
       unitLabel: "Reflet Onirique",
       accentVar: "--reflet",
       icon: iconShard,
-      note: "Ce que coûte chaque rune de sort en Reflet Onirique, et ce qu'elle rapporte revendue.",
+      note: "Ce que coûte une rune de sort en Reflet Onirique, et ce qu'elle rapporte revendue.",
       priceMode: "unit",
       priceCardLabel: "Prix unitaire du Reflet Onirique",
       groups: [
@@ -625,7 +630,7 @@
       unitLabel: "Pépite",
       accentVar: "--pepite",
       icon: iconNugget,
-      note: "Ce que les PNJ et le métier Mineur donnent contre des Pépites, classé par rentabilité.",
+      note: "Ce que les PNJ et le métier Mineur donnent contre des pépites, classé par rentabilité.",
       priceMode: "unit",
       priceCardLabel: "Prix unitaire de la Pépite",
       groups: [
@@ -661,7 +666,7 @@
       unitLabel: "Kolizéton",
       accentVar: "--koli",
       icon: iconPouch,
-      note: "La Bourse s'achète en HDV et rend 1 000 Kolizétons : le prix unitaire s'en déduit, et chaque achat se compare à sa revente.",
+      note: "Une Bourse rend 1 000 Kolizétons : le prix unitaire s'en déduit, et chaque achat se compare à sa revente.",
       priceMode: "bourse",
       priceCardLabel: "Prix de la Bourse de Kolizétons",
       groups: [
@@ -1931,7 +1936,53 @@
         cache: state.zone.cache, cachedAt: state.zone.cachedAt,
       },
       pack: { metier: state.pack.metier, qte: state.pack.qte },
+      /* Le relevé de nourrissage et les lois mesurées ne vivaient que dans le fichier. Une
+         session ouverte sans lui repartait donc avec ces tables vides — et l'export, qui les
+         reconstruit depuis la mémoire vive, remplaçait alors le relevé par du vide. On les
+         garde ici, comme les taux de brisage, pour qu'une session sans fichier ne détruise
+         plus rien. */
+      nourrissage: nourrissageASauver(),
+      formules: { craft: FORMULES.craft, pepitesDrop: FORMULES.pepitesDrop, familier: FORMULES.familier },
     };
+  }
+
+  /* Appelée depuis serializeState, donc après que les tables existent. Quand elles sont vides,
+     on renvoie ce qui était déjà enregistré plutôt que du vide : sans ça, la première sauvegarde
+     d'une session sans fichier effacerait le relevé en mémoire locale. */
+  function nourrissageASauver(){
+    const vif = typeof XP_PAR_CLE !== "undefined" ? XP_PAR_CLE : null;
+    if (vif && Object.keys(vif).length){
+      return {
+        xp: vif,
+        viandes: FAMILIER_RESOURCES.map(function(r){ return r.name; }),
+        autres: FAMILIER_AUTRES.map(function(r){ return r.name; }),
+      };
+    }
+    return state.nourrissage || null;
+  }
+
+  /* Remet en mémoire vive le relevé de nourrissage enregistré, quand aucun fichier ne l'a
+     fourni à cette session. */
+  function rehydraterNourrissage(){
+    const s = state.nourrissage;
+    if (!s || Object.keys(XP_PAR_CLE).length) return 0;
+    Object.keys(s.xp || {}).forEach(function(k){ if (s.xp[k] > 0) XP_PAR_CLE[k] = s.xp[k]; });
+    const remplir = function(tab, noms){
+      tab.length = 0;
+      (noms || []).forEach(function(n){
+        const v = XP_PAR_CLE[priceKey(n)];
+        if (v > 0) tab.push({ name: n, xp: v });
+      });
+    };
+    remplir(FAMILIER_RESOURCES, s.viandes);
+    remplir(FAMILIER_AUTRES, s.autres);
+    const f = state.formules;
+    if (f && !FORMULES.craft){
+      FORMULES.craft = f.craft || null;
+      FORMULES.pepitesDrop = f.pepitesDrop || null;
+      FORMULES.familier = f.familier || null;
+    }
+    return Object.keys(XP_PAR_CLE).length;
   }
 
   let saveTimer = null;
@@ -2091,7 +2142,7 @@
 
     page.innerHTML =
       '<div class="page-head"><h2>Prix</h2><span class="sub" id="prixCount">—</span></div>' +
-      '<p class="page-note">La base commune. Tous les objets de l\'outil sont ici, et chaque prix saisi vaut pour tous les onglets — comme les prix saisis ailleurs remontent ici. C\'est aussi ce seul jeu de données que l\'export et l\'import déplacent.</p>' +
+      '<p class="page-note">La base commune de prix. Un prix saisi ici vaut dans tous les onglets, et l\'inverse. C\'est ce seul jeu de données que l\'export et l\'import déplacent.</p>' +
       '<div class="stat-row">' + currencyCards + '</div>' +
       '<div class="group" style="margin-bottom:16px"><div class="group-head">' +
         '<div class="gh-left"><span class="gh-dot" style="--accent:var(--gold)"></span><h3>Rechercher</h3></div>' +
@@ -2104,7 +2155,7 @@
         '<label style="display:flex;align-items:center;gap:6px;margin-left:auto;font-size:12.5px;white-space:nowrap">Pause' +
           '<input type="text" inputmode="numeric" id="cartoPause" style="width:58px" placeholder="50" /> ms</label>' +
         '<button class="goto" id="cartoBtn" style="margin-left:14px" ' +
-          'title="Demande à DofusDB l\'icône, le nom exact et la famille de nos seuls objets. Interruptible, ne redemande jamais un nom déjà résolu.">🗺 Cartographier</button>' +
+          'title="Récupère icône, nom exact et famille depuis DofusDB. Interruptible, ne redemande jamais un nom résolu.">🗺 Cartographier</button>' +
         '<button class="goto" id="cartoReset" style="margin-left:10px" title="Oublier les résultats et tout réinterroger">↺</button>' +
         '<button class="goto" id="rapproBtn" style="margin-left:10px" title="Retrouver le bon objet derrière un nom mal relevé">🔎 Noms</button>' +
       '</div>' +
@@ -2464,7 +2515,7 @@
     const inconnus = nomsInconnus();
     const liste = rapprochements(0.4);
     if (!inconnus.length){
-      wrap.innerHTML = '<div class="empty-state">Aucun nom en souffrance : tous les prix saisis correspondent à un objet du jeu.</div>';
+      wrap.innerHTML = '<div class="empty-state">Aucun nom en souffrance : chaque prix saisi correspond à un objet du jeu.</div>';
       return;
     }
     const sansCandidat = inconnus.length - liste.length;
@@ -2474,8 +2525,8 @@
         '<span class="pill">' + inconnus.length + '</span></div>' +
         '<button class="goto" id="rapproTout">✓ Appliquer au-dessus de 70 %</button>' +
       '</div>' +
-      '<p class="page-note" style="margin:12px 18px">Relevés à l\'OCR, ces noms ne correspondent à aucun objet. ' +
-        'Le candidat proposé est celui dont les paires de lettres se recoupent le plus ; ' +
+      '<p class="page-note" style="margin:12px 18px">Ces noms relevés à l\'OCR ne correspondent à aucun objet. ' +
+        'Le candidat est celui dont les paires de lettres se recoupent le plus : ' +
         '<b>vérifie avant d\'appliquer</b>, un score élevé n\'est pas une preuve. ' +
         'Appliquer déplace le prix sur le bon nom et supprime l\'ancienne ligne.' +
         (sansCandidat ? ' <b>' + sansCandidat + '</b> n\'ont aucun candidat plausible.' : '') +
@@ -2568,7 +2619,7 @@
       return;
     }
     if (!l.length){
-      wrap.innerHTML = '<div class="warn-band">Aucune ligne douteuse : tous tes prix portent un nom ' +
+      wrap.innerHTML = '<div class="warn-band">Aucune ligne douteuse : chaque prix porte un nom ' +
         'que le jeu connaît.</div>';
       return;
     }
@@ -2764,7 +2815,7 @@
           '<div class="stat-card price-input" style="--accent:var(' + section.accentVar + ')">' +
             '<div class="label">Kamas investis</div>' +
             '<div class="value"><input type="text" inputmode="numeric" id="inv-' + section.id + '" placeholder="0" /><small>kamas</small></div>' +
-            '<div class="sub-note">Le calcul cherche la ligne qui rapporte le plus pour cette mise.</div>' +
+            '<div class="sub-note">La ligne la plus rentable pour cette mise.</div>' +
           '</div>' +
           '<div class="stat-card" style="--accent:var(' + section.accentVar + ')">' +
             '<div class="label">Meilleure ressource</div>' +
@@ -2929,23 +2980,23 @@
 
     page.innerHTML =
       '<div class="page-head"><h2>Recyclage</h2><span class="sub" id="recyCount">—</span></div>' +
-      '<p class="page-note">Combien te coûte une pépite selon ce que tu recycles. Renseigne un prix HDV et la colonne <b>kamas / pépite</b> chiffre la route, les moins chères en haut. Les rendements viennent de ton fichier de taux, jamais de DofusDB. La colonne <b>Pépites brutes</b> est modifiable : si un rendement a bougé en jeu, corrige-le sur place, vide le champ pour revenir à la valeur du fichier.</p>' +
+      '<p class="page-note">Le coût réel d\'une pépite, ressource par ressource. Saisis un prix d\'hôtel de vente : la colonne <b>kamas / pépite</b> classe les routes, la moins chère en haut. La colonne <b>Pépites brutes</b> se corrige sur place.</p>' +
       '<div class="margin-card">' +
         '<div class="stat-row" style="margin-bottom:0">' +
           '<div class="stat-card price-input" style="--accent:var(--pepite)">' +
             '<div class="label">Part reversée au personnage</div>' +
             '<div class="value"><input type="text" inputmode="numeric" id="recyPart" placeholder="50" /><small>%</small></div>' +
-            '<div class="sub-note">Prisme neutre, hors alliance. Valeur non publiée par Ankama — à calibrer avec un recyclage test.</div>' +
+            '<div class="sub-note">Prisme neutre, hors alliance. À calibrer sur un recyclage test.</div>' +
           '</div>' +
           '<div class="stat-card price-input" style="--accent:var(--pepite)">' +
             '<div class="label">Bonus de génération</div>' +
             '<div class="value"><input type="text" inputmode="numeric" id="recyBonus" placeholder="0" /><small>%</small></div>' +
-            '<div class="sub-note">0 hors alliance. Cumulables si ton alliance tient le prisme, le territoire d\'origine de la ressource, ou les territoires adjacents.</div>' +
+            '<div class="sub-note">0 hors alliance. Cumulable : prisme, territoire d\'origine, territoires adjacents.</div>' +
           '</div>' +
           '<div class="stat-card" style="--accent:var(--pepite)">' +
             '<div class="label">Prix de référence de la pépite</div>' +
             '<div class="value" id="recyRef">—<small>kamas</small></div>' +
-            '<div class="sub-note" id="recyRefNote">Repris de l\'onglet Prix. Une route est rentable si son coût par pépite passe dessous.</div>' +
+            '<div class="sub-note appui" id="recyRefNote">—</div>' +
           '</div>' +
           '<div class="stat-card" style="--accent:var(--pepite)">' +
             '<div class="label">Meilleure route</div>' +
@@ -3064,13 +3115,10 @@
     const sortie = meilleureSortiePepite();
     const noteRef = document.getElementById("recyRefNote");
     if (noteRef){
+      noteRef.classList.toggle("profit-neg", !!(sortie && ref && sortie.parUnite > ref * 1.15));
       noteRef.innerHTML = sortie
-        ? "Repris de l'onglet Prix. Meilleure sortie réelle : <b>" + fmt(sortie.parUnite) +
-          " kamas</b> par pépite, via " + sortie.nom + "." +
-          (ref && sortie.parUnite > ref * 1.15
-            ? " Ta référence est en dessous : des routes rentables passent peut-être inaperçues."
-            : "")
-        : "Repris de l'onglet Prix. Une route est rentable si son coût par pépite passe dessous.";
+        ? "<small>sortie</small>" + fmt(sortie.parUnite) + " · " + sortie.nom
+        : "<small>saisi dans l'onglet Prix</small>";
     }
     document.getElementById("recyCount").textContent = recyclageRows.length + " objets";
     document.getElementById("recySource").innerHTML = recyclageLoading
@@ -3796,7 +3844,7 @@
 
     page.innerHTML =
       '<div class="page-head"><h2>Monnaies de zone</h2><span class="sub" id="zoneCount">—</span></div>' +
-      '<p class="page-note">Que faire de tes jetons de zone. Ces monnaies ne s\'échangent pas entre joueurs et n\'ont donc pas de prix : on mesure leur <b>rendement</b>, soit les kamas nets rapportés par unité dépensée. Chaque marchand est classé, du meilleur achat au moins bon.</p>' +
+      '<p class="page-note">Que faire de tes jetons de zone. Ces monnaies n\'ont pas de prix : on mesure le <b>rendement</b>, soit les kamas nets rapportés par unité dépensée. Les marchands sont classés du meilleur au moins bon.</p>' +
       '<div class="margin-card">' +
         '<div class="stat-row" style="margin-bottom:0">' +
           '<div class="stat-card" style="--accent:var(--zone)">' +
@@ -4136,7 +4184,7 @@
 
     page.innerHTML =
       '<div class="page-head"><h2>Runes</h2><span class="sub" id="runeCount">—</span></div>' +
-      '<p class="page-note">Faut-il fusionner ou vendre en l\'état. La fusion est à taux fixe : <b>3 base font 1 Pa</b>, <b>3 Pa font 1 Ra</b> — une Ra vaut donc neuf bases. Dès que le marché paie un palier plus cher que son équivalent en runes base, il y a une marge à prendre.</p>' +
+      '<p class="page-note">Fusionner ou vendre en l\'état. <b>3 base font 1 Pa</b>, <b>3 Pa font 1 Ra</b> : une Ra vaut neuf bases. Dès qu\'un palier se paie plus cher que son équivalent en bases, il y a une marge.</p>' +
       '<div class="margin-card">' +
         '<div class="stat-row" style="margin-bottom:0">' +
           '<div class="stat-card price-input" style="--accent:var(--reflet)">' +
@@ -4339,20 +4387,20 @@
           '<tbody>' + rowsHTML + '</tbody>' +
         '</table></div>' +
         '<div class="pearl-note">' +
-          '<b>Sénile</b> — une monture sénile rapporte 1 ressource pour les 3 montures, quelle que soit sa génération d\'origine. ' +
-          '<b>Perle des profondeurs</b> (colonnes Muldo) — <span class="copy-name" data-copy="Perle des profondeurs" title="Cliquer pour copier">collectée</span> auprès de <b>Sacha Byssal</b> [23, 24] · Sufokia (1 perle en génération 1, 2 perles en génération 2 à 10). ' +
-          'Échangeable chez <b>Pinke Tada</b> [23, 24] contre de l\'Ambre de muldo, à raison de <b>5 perles → 1 Ambre</b>. ' +
-          'Génération 1 est ainsi la seule à rester rentable à cycler pour le Muldo malgré son absence d\'Ambre direct — Dragodinde et Volkorne n\'ont rien en génération 1.' +
+          '<b>Sénile</b> — 1 ressource pour les 3 montures, quelle que soit la génération. ' +
+          '<span class="copy-name" data-copy="Perle des profondeurs" title="Copier le nom"><b>Perle des profondeurs</b></span> ' +
+          '(Muldo) — chez <b>Sacha Byssal</b> [23, 24] Sufokia : 1 perle en génération 1, 2 au-delà. ' +
+          '<b>Pinke Tada</b> [23, 24] échange <b>5 perles</b> contre <b>1 Ambre de muldo</b>.' +
         '</div>' +
       '</div>';
 
     page.innerHTML =
       '<div class="page-head"><h2>Élevage</h2></div>' +
-      '<p class="page-note">Combien payer une monture sans y perdre. Elle rend autant de ressource que sa génération, une sénile en rend toujours 1. Règle la marge que tu veux garder : le tableau donne le prix à ne pas dépasser à l\'achat.</p>' +
+      '<p class="page-note">Le prix à ne pas dépasser à l\'achat d\'une monture. Elle rend autant de ressources que sa génération, une sénile en rend 1. Règle la marge que tu veux garder.</p>' +
       '<div class="margin-card">' +
         '<div class="mc-top"><span class="mc-label">Marge visée sur la revente</span><span class="mc-value" id="marginValue">20%</span></div>' +
         '<input type="range" id="marginSlider" min="0" max="80" step="1" value="20" style="--fill:20%" />' +
-        '<div class="mc-note">Prix limite d\'achat = revenu net (après taxe HDV de 2%) × (1 − marge). Exemple : à marge 20%, si la génération rapporte 1 000 kamas nets, le prix limite d\'achat de la monture est 800 kamas.</div>' +
+        '<div class="mc-note">Prix limite d\'achat = revenu net (taxe HDV de 2 % déduite) × (1 − marge).</div>' +
       '</div>' +
       '<div class="stat-row">' + priceCards + '</div>' +
       tableHTML;
@@ -4420,10 +4468,10 @@
     const slider = document.getElementById("marginSlider");
     slider.value = state.elevage.margin;
     slider.addEventListener("input", function(){
-      state.elevage.margin = parseInt(slider.value, 10);
-      persist();
+      state.elevage.margin = parseInt(slider.value, 10) || 0;
       recomputeElevage();
     });
+    slider.addEventListener("change", function(){ persist(); });
   }
 
   /* ---------------- familier tab ---------------- */
@@ -4441,8 +4489,7 @@
       const croqBadge = idx === 0 ? ' <span class="pill" id="fam-croq-badge" style="display:none"></span>' : '';
       return '<tr id="fam-row-' + idx + '">' +
         '<td class="name">' + casePlan(r.name) +
-          iconImg(r.name) + '<span class="copy-name" data-copy="' + r.name.replace(/"/g, "&quot;") + '" title="Cliquer pour copier">' + r.name + '</span>' + croqBadge +
-          '<span class="pill marque-hors-plan" id="fam-hp-' + idx + '" style="display:none" title="Taux conserv\u00e9 et class\u00e9, mais hors des quantit\u00e9s \u00e0 pr\u00e9voir">hors plan</span>' + '</td>' +
+          iconImg(r.name) + '<span class="copy-name" data-copy="' + r.name.replace(/"/g, "&quot;") + '" title="Cliquer pour copier">' + r.name + '</span>' + croqBadge + '</td>' +
         '<td class="num qty">' + fmtXp(r.xp) + '</td>' +
         '<td class="hdv-cell"><input type="text" inputmode="numeric" id="fam-hdv-' + idx + '" data-price-name="' + r.name.replace(/"/g, "&quot;") + '" placeholder="0" /></td>' +
         '<td class="hdv-cell"><input type="text" inputmode="numeric" id="fam-qty-' + idx + '" placeholder="0" /></td>' +
@@ -4454,7 +4501,7 @@
 
     page.innerHTML =
       '<div class="page-head"><h2>Familier</h2></div>' +
-      '<p class="page-note">Jusqu\'où monter un familier, et avec quoi. L\'outil combine les ressources les moins chères à l\'XP, puise d\'abord dans ce que tu as en stock, puis chiffre les trois paliers de revente pour retenir le plus rentable — monter à 100 n\'est pas toujours le bon choix, les derniers niveaux coûtent ' + fmtXp(XP_TOTAL[100]) + ' XP au total. Table XP : dafous.app.</p>' +
+      '<p class="page-note">Jusqu\'où monter un familier, et avec quoi le nourrir. L\'outil combine les ressources les moins chères à l\'XP, puise d\'abord dans ton stock, puis compare les paliers de revente 80, 90 et 100. Monter à 100 coûte ' + fmtXp(XP_TOTAL[100]) + ' XP et n\'est pas toujours le bon choix. Table d\'XP : dafous.app.</p>' +
       '<div class="margin-card">' +
         '<div class="stat-row" style="margin-bottom:18px">' +
           '<div class="stat-card price-input" style="--accent:var(--familier)">' +
@@ -4481,7 +4528,7 @@
         '</div>' +
         '<div class="mc-top"><span class="mc-label">Marge visée sur la revente</span><span class="mc-value" id="famMarginValue">20%</span></div>' +
         '<input type="range" id="famMarginSlider" min="0" max="80" step="1" value="20" style="--fill:20%" />' +
-        '<div class="mc-note">Prix limite d\'achat = (prix de vente net − coût d\'obtention des ressources) × (1 − marge).</div>' +
+        '<div class="mc-note">Prix limite d\'achat = (prix de vente net − coût des ressources) × (1 − marge).</div>' +
       '</div>' +
       '<div class="stat-row" id="famStats">' +
         '<div class="stat-card" style="--accent:var(--gold)"><div class="label">Niveau cible retenu</div><div class="value" id="famCible">—</div><div class="sub-note" id="famCibleNote">Renseigne au moins un prix de vente.</div></div>' +
@@ -4496,6 +4543,9 @@
       '<div class="group">' +
         '<div class="group-head">' +
           '<div class="gh-left"><span class="gh-dot" style="--accent:var(--familier)"></span><h3>Viandes et bidoches</h3><span class="pill">' + FAMILIER_RESOURCES.length + '</span></div>' +
+          '<button class="goto" id="famResetPlan" style="margin-left:auto" ' +
+            'title="Recocher toutes les ressources du Familier décochées, ici et dans Autres ressources">' +
+            '↺ Tout recocher</button>' +
         '</div>' +
         '<div class="table-wrap"><table>' +
           '<thead><tr><th>Objet</th><th class="num">XP / unité</th><th class="num">Prix HDV</th><th class="num">Quantité</th><th class="num">XP / kamas</th><th class="num">Utilisé (niveau 100)</th><th class="num">Coût total seul</th></tr></thead>' +
@@ -4514,9 +4564,8 @@
           '<tbody id="famxBody"></tbody>' +
         '</table></div>' +
         '<div class="pearl-note">' +
-          'Par défaut, seules les ressources dont tu as renseigné un prix apparaissent ici — sinon la liste ferait ' + FAMILIER_AUTRES.length + ' lignes. ' +
-          'Utilise la recherche pour en trouver une et lui donner un prix, elle restera ensuite affichée. ' +
-          'Toutes celles qui ont un prix entrent dans le calcul du coût optimal, au même titre que les viandes.' +
+          'Seules les ressources déjà chiffrées sont listées — la liste complète ferait ' + FAMILIER_AUTRES.length + ' lignes. ' +
+          'Cherches-en une et donne-lui un prix : elle reste affichée, et entre dans le calcul au même titre que les viandes.' +
         '</div>' +
       '</div>';
 
@@ -4539,6 +4588,41 @@
     if (!candidates.length) return null;
     candidates.sort(function(a, b){ return a.cost - b.cost; });
     return candidates[0];
+  }
+
+  /* Le prix limite d'achat est la seule valeur du Familier qui dépende de la marge. On le tient
+     à l'écart du recalcul complet : un déplacement de curseur envoie des dizaines d'événements,
+     et reconstruire la table des viandes à chacun d'eux figeait la page dès le relevé chargé —
+     le curseur n'arrivait plus à suivre le doigt. Ici on ne retouche qu'une case, à partir de la
+     marge de manœuvre retenue au dernier calcul complet. */
+  /* Les cases décochées de l'onglet Familier. Le bouton de remise à zéro ne touche qu'aux
+     ressources de cet onglet : une ligne mise hors plan dans Recyclage ou Pépites est un autre
+     travail, qu'un bouton d'ici n'a pas à effacer. */
+  function famHorsPlan(){
+    return FAMILIER_RESOURCES.concat(FAMILIER_AUTRES)
+      .map(function(r){ return r.name; })
+      .filter(horsPlan);
+  }
+  function majBoutonPlan(){
+    const b = document.getElementById("famResetPlan");
+    if (!b) return;
+    const n = famHorsPlan().length;
+    b.disabled = !n;
+    b.textContent = n ? "↺ Tout recocher (" + n + ")" : "↺ Tout recocher";
+  }
+
+  let famHeadroom = null;
+  function majFamPrixLimite(){
+    const el = document.getElementById("famMaxBuy");
+    if (!el) return;
+    el.classList.remove("profit-neg");
+    if (famHeadroom === null){ el.innerHTML = "—<small>kamas</small>"; return; }
+    if (famHeadroom <= 0){
+      el.innerHTML = "Non rentable<small>ressources &gt; vente</small>";
+      el.classList.add("profit-neg");
+      return;
+    }
+    el.innerHTML = fmt(famHeadroom * (1 - (state.familier.margin || 0) / 100)) + "<small>kamas</small>";
   }
 
   function recomputeFamilier(){
@@ -4748,11 +4832,11 @@
         usedEl.classList.add("empty");
         rowEl.classList.remove("row-highlight");
       }
-      // décochée : la ligne garde son XP par kamas et son rang, elle ne sert plus qu'à comparer
+      // décochée : la ligne garde son XP par kamas et son rang, elle ne sert plus qu'à comparer.
+      // La case décochée et la ligne grisée le disent ; pas besoin d'une étiquette en plus.
       rowEl.classList.toggle("hors-plan", horsPlan(rec.name));
-      const hpEl = document.getElementById("fam-hp-" + rec.idx);
-      if (hpEl) hpEl.style.display = horsPlan(rec.name) ? "" : "none";
     });
+    majBoutonPlan();
 
     /* Classement automatique de la table des viandes : la meilleure XP par kamas en tête, ce qui
        met sous les yeux la ressource à acheter. Une ligne sans prix n'est comparable à rien et
@@ -4791,15 +4875,10 @@
       // rend l'opération rentable : on l'affiche clairement plutôt qu'un montant négatif qui,
       // à cause du × (1 − marge), se rapproche de 0 quand on AUGMENTE la marge — un comportement
       // qui semble inversé si on ne sait pas que la base est déjà négative.
-      const headroom = netSell100 - optCost;
-      if (headroom <= 0){
-        maxBuyEl.innerHTML = "Non rentable<small>ressources &gt; vente</small>";
-        maxBuyEl.classList.add("profit-neg");
-      } else {
-        const maxBuy = headroom * (1 - margin / 100);
-        maxBuyEl.innerHTML = fmt(maxBuy) + "<small>kamas</small>";
-      }
+      famHeadroom = netSell100 - optCost;
+      majFamPrixLimite();
     } else {
+      famHeadroom = null;
       profitEl.innerHTML = "—<small>kamas</small>";
       maxBuyEl.innerHTML = "—<small>kamas</small>";
     }
@@ -4945,12 +5024,35 @@
       });
     });
 
+    const resetPlan = document.getElementById("famResetPlan");
+    if (resetPlan) resetPlan.addEventListener("click", function(){
+      const noms = famHorsPlan();
+      if (!noms.length) return;
+      noms.forEach(function(n){ delete state.exclus[priceKey(n)]; });
+      persist();
+      /* Les cases des viandes sont du HTML posé une fois, elles ne se redessinent pas au
+         recalcul — on les recoche à la main. Celles d'« Autres ressources » suivront d'elles-mêmes. */
+      Array.prototype.forEach.call(
+        document.querySelectorAll("#page-familier input.plan-case"),
+        function(c){ c.checked = true; });
+      recomputeEverything();
+      recomputeRecyclage();
+      showMessage("<b>" + noms.length + " ressource" + (noms.length > 1 ? "s" : "") +
+        "</b> remise" + (noms.length > 1 ? "s" : "") + " au plan");
+    });
+    majBoutonPlan();
+
     const marginSlider = document.getElementById("famMarginSlider");
     marginSlider.value = state.familier.margin;
+    /* Pendant le glissement : la marge, l'étiquette, le remplissage et la seule case concernée.
+       À la relâche seulement : l'écriture en mémoire. */
     marginSlider.addEventListener("input", function(){
-      state.familier.margin = parseInt(marginSlider.value, 10);
-      persist(); recomputeFamilier();
+      state.familier.margin = parseInt(marginSlider.value, 10) || 0;
+      document.getElementById("famMarginValue").textContent = state.familier.margin + "%";
+      setSliderFill(marginSlider, state.familier.margin, 0, 80);
+      majFamPrixLimite();
     });
+    marginSlider.addEventListener("change", function(){ persist(); });
 
     const bonusInput = document.getElementById("famBonusXp");
     bonusInput.value = state.familier.bonusXp || "";
@@ -5022,7 +5124,7 @@
     page.id = "page-almanax";
     page.innerHTML =
       '<div class="page-head"><h2>Almanax</h2><span class="sub" id="almaCount">—</span></div>' +
-      '<p class="page-note">L\'offrande du jour, son coût réel et ce qu\'elle rapporte. Le calendrier est connu à l\'avance : c\'est la seule ressource du jeu dont tu connais la date exacte du pic de demande, ce qui laisse le temps d\'acheter avant que le prix ne monte.</p>' +
+      '<p class="page-note">L\'offrande du jour, son coût et ce qu\'elle rapporte. Le calendrier est connu à l\'avance : c\'est le seul pic de demande du jeu qu\'on puisse anticiper, et donc acheter avant.</p>' +
       '<div class="stat-row">' +
         '<div class="stat-card" style="--accent:var(--gold)"><div class="label">Coût des offrandes</div><div class="value" id="almaCout">—<small>kamas</small></div><div class="sub-note" id="almaChiffres">—</div></div>' +
         '<div class="stat-card" style="--accent:var(--gold)"><div class="label">Gains des quêtes</div><div class="value" id="almaGain">—<small>kamas</small></div></div>' +
@@ -5220,7 +5322,7 @@
 
     page.innerHTML =
       '<div class="page-head"><h2>Pack métiers</h2><span class="sub" id="packSub">—</span></div>' +
-      '<p class="page-note">Ce qu\'il faut acheter au HDV pour monter un métier de <b>0 à 200</b> en craftant la meilleure recette de chaque tranche. À gauche, le détail palier par palier ; à droite, chaque ressource additionnée sur tout le pack. Les prix unitaires sont ceux de la base commune : un prix saisi ici sert aussi dans Recyclage, Zones et Prix.</p>' +
+      '<p class="page-note">Ce qu\'il faut acheter pour monter un métier de <b>0 à 200</b> en craftant la meilleure recette de chaque tranche. À gauche, palier par palier ; à droite, chaque ressource cumulée sur tout le pack. Les prix viennent de la base commune.</p>' +
       '<div class="margin-card">' +
         '<div class="stat-row" style="margin-bottom:0">' +
           '<div class="stat-card" style="--accent:var(--pepite)">' +
@@ -5941,7 +6043,14 @@
      le remplace que là où il n'y en a pas. */
   (function amorcerDonnees(){
     const o = window.KAMALYSE_DATA;
-    if (!o || !Array.isArray(o.objets)) return;
+    /* Sans fichier, on repart du relevé de nourrissage gardé en mémoire locale : l'onglet
+       Familier reste chiffré au lieu de s'ouvrir vide. */
+    if (!o || !Array.isArray(o.objets)){
+      try{
+        if (rehydraterNourrissage()) setTimeout(rafraichirApresDonnees, 0);
+      }catch(e){}
+      return;
+    }
     const avant = {};
     Object.keys(state.prices || {}).forEach(function(k){ avant[k] = state.prices[k]; });
     try{
@@ -5956,6 +6065,28 @@
 
   document.getElementById("exportBtn").addEventListener("click", function(){
     const d = construireDonnees();
+    /* Garde-fou : l'export reconstruit le fichier depuis la mémoire vive. Si un bloc entier n'a
+       jamais été chargé dans cette session, il sortirait vide — et écraser l'ancien fichier avec
+       celui-là détruit le relevé. On refuse plutôt que de laisser passer. */
+    const manque = [];
+    if (!Object.keys(XP_PAR_CLE).length) manque.push("le relevé d'XP de nourrissage");
+    if (!d.objets.length) manque.push("les objets");
+    if (!FORMULES.craft) manque.push("les lois mesurées");
+    if (manque.length){
+      let force = false;
+      try{
+        force = window.confirm(
+          "Cet export ne contiendra pas " + manque.join(", ") + ".\n\n" +
+          "Si tu écrases ton kamalyse.json avec celui-ci, ces données sont perdues. " +
+          "Charge d'abord ton fichier (⭱ Importer), puis réexporte.\n\n" +
+          "Exporter quand même ?");
+      }catch(e){ force = false; }
+      if (!force){
+        showMessage("<b>Export annulé</b> — il manque " + manque.join(", ") +
+          ". Charge ton fichier avec ⭱ Importer, puis réexporte.");
+        return;
+      }
+    }
     const blob = new Blob([JSON.stringify(d)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -6118,10 +6249,9 @@
   porte.innerHTML =
     '<div class="porte-box">' +
       '<h3>L\'onglet <span style="color:var(--gold)" id="porteNom"></span> fait partie de l\'accès complet</h3>' +
-      '<p>Les onglets <b>Recyclage</b> et <b>Familier</b> restent libres et pleinement ' +
-        'fonctionnels. Le reste — les onglets d\'arbitrage, le relevé des rendements de brisage, ' +
-        'les valeurs d\'expérience de nourrissage et les prix d\'hôtel de vente — s\'ouvre avec un ' +
-        'mot de passe.</p>' +
+      '<p><b>Recyclage</b> et <b>Familier</b> restent libres. Le reste — onglets d\'arbitrage, ' +
+        'rendements de brisage, valeurs d\'XP de nourrissage et prix d\'hôtel de vente — s\'ouvre ' +
+        'avec un mot de passe.</p>' +
       '<a class="btn-acces gros" href="' + LIEN_DISCORD + '" target="_blank" rel="noopener">' +
         'Me contacter sur Discord</a>' +
       '<form id="porteForm">' +
