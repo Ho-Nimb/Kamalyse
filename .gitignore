@@ -1,0 +1,27 @@
+# Le relevé — ne doit jamais partir sur un dépôt public.
+# Le chiffrement de l'index.html ne protège pas ces fichiers : ce sont des fichiers
+# voisins, servis en clair par GitHub Pages à qui tape l'URL.
+kamalyse.json
+kamalyse-donnees.js
+kamalyse-catalogue.js
+final.enc
+loupe-retente-ta-chance.txt
+chaudron-remue-la-soupe.txt
+recettes.json
+
+# Archives, relevés bruts, scripts de nettoyage
+Kamalyse - archives/
+*.csv
+prix-*.txt
+sans_prix.txt
+
+# Outils qui ne regardent personne
+chiffrer-pour-github.html
+empreinte.html
+generer-catalogue.html
+generer-recettes.html
+
+# Banc de tests
+node_modules/
+t*.mjs
+banc*.mjs
